@@ -43,6 +43,11 @@ class MyAppState extends ChangeNotifier {
     }
     notifyListeners();
   }
+
+  void clearFavorites() {
+    favorites = [];
+    notifyListeners();
+  }
 }
 
 class MyHomePage extends StatefulWidget {
@@ -116,12 +121,21 @@ class FavoritesPage extends StatelessWidget {
         child: Text('No favorites yet.'),
       );
     }
+
     return ListView(
       children: [
         Padding(
           padding: const EdgeInsets.all(20),
           child: Text('You have '
               '${appState.favorites.length} favorites:'),
+        ),
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+                onPressed: appState.clearFavorites, child: Text('clear all')),
+          ],
         ),
         for (var pair in appState.favorites)
           ListTile(
