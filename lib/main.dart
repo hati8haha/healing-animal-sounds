@@ -68,10 +68,35 @@ class _MyHomePageState extends State<MyHomePage> {
         page = FavoritesPage();
         break;
       default:
-        throw UnimplementedError('no widget for $selectedIndex');
+        page = GeneratorPage();
+
+      // throw UnimplementedError('no widget for $selectedIndex');
     }
     return LayoutBuilder(builder: (context, constraints) {
       return Scaffold(
+        bottomNavigationBar: NavigationBar(
+          onDestinationSelected: (int index) {
+            setState(() {
+              selectedIndex = index;
+            });
+          },
+          selectedIndex: selectedIndex,
+          destinations: const <Widget>[
+            NavigationDestination(
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.flood),
+              label: 'No Home',
+            ),
+            NavigationDestination(
+              selectedIcon: Icon(Icons.bookmark),
+              icon: Icon(Icons.earbuds),
+              label: 'Turn around',
+            ),
+          ],
+        ),
         body: Row(
           children: [
             SafeArea(
