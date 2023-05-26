@@ -67,6 +67,9 @@ class _MyHomePageState extends State<MyHomePage> {
       case 1:
         page = FavoritesPage();
         break;
+      case 2:
+        page = CustomGridView();
+        break;
       default:
         page = GeneratorPage();
 
@@ -91,6 +94,10 @@ class _MyHomePageState extends State<MyHomePage> {
               label: 'No Home',
             ),
             NavigationDestination(
+              icon: Icon(Icons.flood),
+              label: '聲音',
+            ),
+            NavigationDestination(
               selectedIcon: Icon(Icons.bookmark),
               icon: Icon(Icons.earbuds),
               label: 'Turn around',
@@ -110,6 +117,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   NavigationRailDestination(
                     icon: Icon(Icons.favorite),
                     label: Text('Favorites'),
+                  ),
+                  NavigationRailDestination(
+                    icon: Icon(Icons.favorite),
+                    label: Text('聲音'),
                   ),
                 ],
                 selectedIndex: selectedIndex,
@@ -243,3 +254,40 @@ class BigCard extends StatelessWidget {
     );
   }
 }
+
+class CustomGridView extends StatelessWidget {
+  // final data = List.generate(12, (i) => Color(0xFFFF00FF - 2 * i));
+  final data = List.generate(12, (i) => Color(0xff00ffff - 2 * i));
+  
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: GridView.count(
+        crossAxisCount: 2,
+        mainAxisSpacing: 12,
+        crossAxisSpacing: 20,
+        childAspectRatio: 1 / 0.5,
+        children: data.map((color) => _buildItem(color)).toList(),
+      ),
+    );
+  }
+
+  Container _buildItem(Color color) => Container(
+        alignment: Alignment.center,
+        width: 100,
+        height: 30,
+        color: color,
+        child: Text(
+          colorString(color),
+          style: TextStyle(color: Colors.white, shadows: [
+            Shadow(color: Colors.black, offset: Offset(.5, .5), blurRadius: 2)
+          ]),
+        ),
+      );
+  
+  String colorString(Color color) =>
+      "#${color.value.toRadixString(16).padLeft(8, '0').toUpperCase()}";
+}
+
+
