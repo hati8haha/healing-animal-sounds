@@ -1,5 +1,5 @@
 import 'package:english_words/english_words.dart';
-import 'package:first_app/pages/playing.dart';
+import 'package:first_app/pages/sound.dart';
 import 'package:first_app/pages/setting.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -72,7 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
         page = HomePage();
         break;
       case 2:
-        page = PlayingPage();
+        page = SoundPage();
         break;
       case 3:
         page = SettingPage();
@@ -91,21 +91,21 @@ class _MyHomePageState extends State<MyHomePage> {
           selectedIndex: selectedIndex,
           destinations: const <Widget>[
             NavigationDestination(
+              icon: Icon(Icons.start),
+              label: 'Landing',
+            ),
+            NavigationDestination(
               icon: Icon(Icons.home),
               label: 'Home',
             ),
             NavigationDestination(
-              icon: Icon(Icons.flood),
-              label: 'No Home',
-            ),
-            NavigationDestination(
-              icon: Icon(Icons.flood),
-              label: '聲音',
+              icon: Icon(Icons.speaker),
+              label: 'Sound',
             ),
             NavigationDestination(
               selectedIcon: Icon(Icons.bookmark),
-              icon: Icon(Icons.earbuds),
-              label: 'Turn around',
+              icon: Icon(Icons.settings),
+              label: 'Setting',
             ),
           ],
         ),
