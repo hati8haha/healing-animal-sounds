@@ -39,6 +39,8 @@ class SettingPage extends StatelessWidget {
                 },
                 child: Text('Next'),
               ),
+              Image(
+                  image: AssetImage('assets/images/background/golden-sea.png'))
             ],
           ),
         ],
