@@ -1,6 +1,6 @@
 {
-    "name": "first_app",
-    "short_name": "first_app",
+    "name": "healing_animal_sounds",
+    "short_name": "healing_animal_sounds",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

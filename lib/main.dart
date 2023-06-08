@@ -1,6 +1,6 @@
 import 'package:english_words/english_words.dart';
-import 'package:first_app/pages/sound.dart';
-import 'package:first_app/pages/setting.dart';
+import 'package:healing_animal_sounds/pages/sound.dart';
+import 'package:healing_animal_sounds/pages/setting.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import './pages/landing.dart';

@@ -1,12 +1,11 @@
-import 'package:first_app/main.dart';
+import 'package:healing_animal_sounds/main.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../widgets/big_card.dart';
 
-
 class SettingPage extends StatelessWidget {
   @override
-    Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
     var pair = appState.current;
 

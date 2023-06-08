@@ -1,4 +1,4 @@
-import 'package:first_app/main.dart';
+import 'package:healing_animal_sounds/main.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
