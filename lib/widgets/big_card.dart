@@ -1,7 +1,5 @@
 import 'package:english_words/english_words.dart';
-import 'package:first_app/main.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class BigCard extends StatelessWidget {
   const BigCard({
