@@ -1,21 +1,136 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
-class SettingPage extends StatelessWidget {
+class SettingPage extends StatefulWidget {
+  @override
+  State<SettingPage> createState() => _SettingPageState();
+}
+
+class _SettingPageState extends State<SettingPage> {
+  String selectedLanguage = '繁體中文';
+  bool showLanguageOptions = false;
+
+  List<String> languageOptions = [
+    '繁體中文',
+    'English',
+    'Spanish',
+    'French',
+    'German',
+    'Japanese',
+  ];
+
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage('assets/images/background/grass-sea.png'),
-              fit: BoxFit.cover)),
-      child: Center(
-        child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-            child: (Image(
-                image: AssetImage('assets/images/animals/bird.png'),
-                fit: BoxFit.fitHeight))),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        body: Column(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "設定",
+                        style: TextStyle(
+                          fontSize: 20.0,
+                        ),
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                    icon: Icon(
+                      Icons.keyboard_arrow_right,
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: ListView(
+                children: <Widget>[
+                  ListTile(
+                    leading: Icon(Icons.language),
+                    title: Text('語言'),
+                    subtitle: Text(selectedLanguage),
+                    trailing: Icon(showLanguageOptions
+                        ? Icons.keyboard_arrow_up
+                        : Icons.keyboard_arrow_down),
+                    onTap: () {
+                      setState(() {
+                        showLanguageOptions = !showLanguageOptions;
+                      });
+                    },
+                  ),
+                  if (showLanguageOptions)
+                    ...languageOptions.map((language) => ListTile(
+                          title: Text(language),
+                          onTap: () {
+                            setState(() {
+                              selectedLanguage = language;
+                              showLanguageOptions = false;
+                            });
+                          },
+                        )),
+                  ListTile(
+                    leading: Icon(Icons.dark_mode),
+                    title: Text('暗夜模式'),
+                    trailing: Icon(Icons.keyboard_arrow_right),
+                    onTap: () {
+                      ///
+                    },
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.emoji_events),
+                    title: Text('升級VIP'),
+                    trailing: Icon(Icons.keyboard_arrow_right),
+                    onTap: () {
+                      ///
+                    },
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.thumb_up),
+                    title: Text('在Play Store給我們 ⭐'),
+                    trailing: Icon(Icons.keyboard_arrow_right),
+                    onTap: () {
+                      ///
+                    },
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.message),
+                    title: Text('意見與反饋'),
+                    trailing: Icon(Icons.keyboard_arrow_right),
+                    onTap: () {
+                      ///
+                    },
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.gpp_maybe_outlined),
+                    title: Text('隱私權條款'),
+                    trailing: Icon(Icons.keyboard_arrow_right),
+                    onTap: () {
+                      ///
+                    },
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              alignment: Alignment.center,
+              padding: EdgeInsets.all(16.0),
+              child: Image.asset(
+                'assets/images/animals/bird.png',
+                height: 300.0,
+                width: 300.0,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

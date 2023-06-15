@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:healing_animal_sounds/pages/setting.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -61,16 +62,19 @@ class _HomePageState extends State<HomePage> {
       home: Scaffold(
         appBar: AppBar(
           elevation: 0,
-          backgroundColor: Colors.blue[300],
+          backgroundColor: Colors.blue[200],
           title: Text('動物白噪音'),
           actions: [
             IconButton(
               icon: Icon(
                 Icons.menu,
-                color: Colors.black,
+                color: Colors.white,
               ),
               onPressed: () {
-                // Add your onPressed logic here
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SettingPage()),
+                );
               },
             ),
           ],
@@ -101,7 +105,7 @@ class _HomePageState extends State<HomePage> {
                             backgroundColor: Colors.white,
                             label: Text(buttonLabels[index]),
                             selected: selectedIndex == index,
-                            selectedColor: Colors.blue,
+                            selectedColor: Colors.blue[100],
                             onSelected: (bool selected) {
                               setState(() {
                                 selectedIndex = selected ? index : -1;
@@ -121,10 +125,20 @@ class _HomePageState extends State<HomePage> {
                   child: GridView.count(
                     crossAxisCount: 2,
                     children: List.generate(8, (index) {
-                      return Center(
-                        child: Image.asset(
-                          'assets/images/animals/bird.png', // Replace with your image asset path
-                          fit: BoxFit.cover,
+                      return Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Container(
+                          color: Colors.grey[200],
+                          child: Center(
+                            child: SizedBox(
+                              width: 150,
+                              height: 150,
+                              child: Image.asset(
+                                'assets/images/animals/bird.png', // Replace with your image asset path
+                                fit: BoxFit.contain,
+                              ),
+                            ),
+                          ),
                         ),
                       );
                     }),

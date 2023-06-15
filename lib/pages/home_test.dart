@@ -59,7 +59,7 @@ class HomePage extends StatelessWidget {
                     return Center(
                       child: Text(
                         'Item $index',
-                        style: Theme.of(context).textTheme.headline6,
+                        style: Theme.of(context).textTheme.headlineSmall,
                       ),
                     );
                   }),
