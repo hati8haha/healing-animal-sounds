@@ -29,3 +29,10 @@ flutter:
     - assets/images/animals/
     - assets/images/background/
     - assets/images/others/
+  fonts:
+    - family: Poppins
+      fonts:
+        - asset: fonts/Poppins-Regular.ttf
+    - family: MonomaniacOne
+      fonts:
+        - asset: fonts/MonomaniacOne-Regular.ttf

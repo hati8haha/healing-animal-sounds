@@ -44,27 +44,29 @@ class HomePage extends StatelessWidget {
               ),
             ),
           ),
-          body: Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/background/home-bg.png'),
-                fit: BoxFit.cover,
+          body: SafeArea(
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/images/background/home-bg.png'),
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
-            child: TabBarView(
-              children: tabs.map((tab) {
-                return GridView.count(
-                  crossAxisCount: 2,
-                  children: List.generate(8, (index) {
-                    return Center(
-                      child: Text(
-                        'Item $index',
-                        style: Theme.of(context).textTheme.headlineSmall,
-                      ),
-                    );
-                  }),
-                );
-              }).toList(),
+              child: TabBarView(
+                children: tabs.map((tab) {
+                  return GridView.count(
+                    crossAxisCount: 2,
+                    children: List.generate(8, (index) {
+                      return Center(
+                        child: Text(
+                          'Item $index',
+                          style: Theme.of(context).textTheme.headlineSmall,
+                        ),
+                      );
+                    }),
+                  );
+                }).toList(),
+              ),
             ),
           ),
         ),
