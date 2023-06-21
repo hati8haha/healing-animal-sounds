@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../components/count_down_timer.dart';
+// ignore: depend_on_referenced_packages
+import 'package:audioplayers/audioplayers.dart';
 
 class SoundPage extends StatefulWidget {
   @override
@@ -10,6 +12,20 @@ class _SoundPageState extends State<SoundPage> {
   bool showMusicMenu = false;
   bool showBgMenu = false;
   bool showFilterMenu = false;
+
+  final player = AudioPlayer();
+  @override
+  void initState() {
+    super.initState();
+    player.play(AssetSource('audio/song.mp3'));
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    player.dispose();
+  }
+  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -45,7 +61,6 @@ class _SoundPageState extends State<SoundPage> {
                 Column(
                   children: [
                     CountdownTimer(),
-                    SizedBox(height: 100),
                     SizedBox(
                       height: 56,
                       child: ListTile(
