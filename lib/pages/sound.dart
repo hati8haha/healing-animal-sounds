@@ -13,18 +13,29 @@ class _SoundPageState extends State<SoundPage> {
   bool showBgMenu = false;
   bool showFilterMenu = false;
 
+  //for old version
+  AudioPlayer audioPlayer = AudioPlayer();
+  String localFilePath = 'assets/audio/song.mp3';
   final player = AudioPlayer();
   @override
   void initState() {
     super.initState();
-    player.play(AssetSource('audio/song.mp3'));
+    audioPlayer = AudioPlayer();
+    playMusic();
+    // player.play(AssetSource('audio/song.mp3'));
+  }
+  void playMusic() async {
+    await audioPlayer.play(localFilePath, isLocal: true);
   }
 
   @override
   void dispose() {
     super.dispose();
-    player.dispose();
+    // player.dispose();
+    audioPlayer.stop();
+    audioPlayer.release();
   }
+
   
   @override
   Widget build(BuildContext context) {
@@ -185,7 +196,7 @@ class _SoundPageState extends State<SoundPage> {
                           ),
                         ),
                       ),
-                    ),
+                    ),                    
                     Container(
                       alignment: Alignment.center,
                       padding: EdgeInsets.all(16.0),
