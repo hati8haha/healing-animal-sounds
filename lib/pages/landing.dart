@@ -1,7 +1,15 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:babylonjs_viewer/babylonjs_viewer.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
-class LandingPage extends StatelessWidget {
+class LandingPage extends StatefulWidget {
+  @override
+  State<LandingPage> createState() => _LandingPageState();
+}
+
+class _LandingPageState extends State<LandingPage> {
+  var _controller;
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
@@ -19,9 +27,24 @@ class LandingPage extends StatelessWidget {
                 Text('App name'),
                 Text('小動物們蠢蠢欲動了！'),
                 Text('今天陪伴你的會是誰呢？'),
-                Image(
-                    image: AssetImage('assets/images/animals/bird.png'),
-                    fit: BoxFit.fitHeight),
+                ElevatedButton(
+                    onPressed: () {
+                      _controller?.runJavascript('''
+sayHello();
+''');
+                    },
+                    child: const Text("Run Function")),
+                SizedBox(
+                    height: 400,
+                    width: 400,
+                    child: BabylonJSViewer(
+                      controller: (WebViewController controller) {
+                        _controller = controller;
+                      },
+                      functions:
+                          '''function sayHello() { Print.postMessage("Hello World!"); }''',
+                      src: 'assets/animals/ArcticFox_Animations.glb',
+                    ))
               ],
             ))),
       ),
