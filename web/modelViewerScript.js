@@ -24,12 +24,10 @@ function randomAction () {
   return actions[Math.round(Math.random() * (actions.length - 1))]
 }
 
-var setTimeout
 
 modelViewer.addEventListener('click', function () {
-  clearTimeout(setTimeout)
   modelViewer.animationName = randomAction()
-  setTimeout = setTimeout(function () {
+  setTimeout(function () {
     modelViewer.animationName = defaultAction
   }, 2000)
 })

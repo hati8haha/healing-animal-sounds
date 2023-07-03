@@ -21,7 +21,7 @@ class _SoundPageState extends State<SoundPage> {
   bool showBgMenu = false;
   bool showFilterMenu = false;
   final String modelViewerScript =
-      'var setTimeout;const modelViewer=document.querySelector("model-viewer"),defaultAction="Idle_A",actions=["Attack","Bounce","Clicked","Death","Eat","Fear","Fly","Hit","Idle_B","Idle_C","Jump","Roll","Run","Sit","Spin","Swim","Walk"];function randomAction(){return actions[Math.round(Math.random()*(actions.length-1))]}modelViewer.addEventListener("click",function(){clearTimeout(setTimeout),modelViewer.animationName=randomAction(),setTimeout=setTimeout(function(){modelViewer.animationName="Idle_A"},2e3)});';
+      'const modelViewer=document.querySelector("model-viewer"),defaultAction="Idle_A",actions=["Attack","Bounce","Clicked","Death","Eat","Fear","Fly","Hit","Idle_B","Idle_C","Jump","Roll","Run","Sit","Spin","Swim","Walk"];function randomAction(){return actions[Math.round(Math.random()*(actions.length-1))]}modelViewer.addEventListener("click",function(){modelViewer.animationName=randomAction(),setTimeout(function(){modelViewer.animationName="Idle_A"},2e3)});';
 
   final player = AudioPlayer();
   @override
