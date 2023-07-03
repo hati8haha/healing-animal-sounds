@@ -2,8 +2,16 @@ import 'package:flutter/material.dart';
 import '../components/count_down_timer.dart';
 // ignore: depend_on_referenced_packages
 import 'package:audioplayers/audioplayers.dart';
+import 'package:model_viewer_plus/model_viewer_plus.dart';
 
 class SoundPage extends StatefulWidget {
+  final String animalName;
+
+  const SoundPage({
+    super.key,
+    required this.animalName,
+  });
+
   @override
   State<SoundPage> createState() => _SoundPageState();
 }
@@ -12,6 +20,8 @@ class _SoundPageState extends State<SoundPage> {
   bool showMusicMenu = false;
   bool showBgMenu = false;
   bool showFilterMenu = false;
+  final String modelViewerScript =
+      'var setTimeout;const modelViewer=document.querySelector("model-viewer"),defaultAction="Idle_A",actions=["Attack","Bounce","Clicked","Death","Eat","Fear","Fly","Hit","Idle_B","Idle_C","Jump","Roll","Run","Sit","Spin","Swim","Walk"];function randomAction(){return actions[Math.round(Math.random()*(actions.length-1))]}modelViewer.addEventListener("click",function(){clearTimeout(setTimeout),modelViewer.animationName=randomAction(),setTimeout=setTimeout(function(){modelViewer.animationName="Idle_A"},2e3)});';
 
   final player = AudioPlayer();
   @override
@@ -25,7 +35,7 @@ class _SoundPageState extends State<SoundPage> {
     super.dispose();
     player.dispose();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -187,14 +197,22 @@ class _SoundPageState extends State<SoundPage> {
                       ),
                     ),
                     Container(
-                      alignment: Alignment.center,
-                      padding: EdgeInsets.all(16.0),
-                      child: Image.asset(
-                        'assets/images/animals/bird.png',
-                        height: 300.0,
-                        width: 300.0,
-                      ),
-                    ),
+                        alignment: Alignment.center,
+                        padding: EdgeInsets.all(16.0),
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          height: 400,
+                          child: ModelViewer(
+                              src: 'assets/animals/${widget.animalName}.gltf',
+                              autoPlay: true,
+                              animationName: 'Idle_A',
+                              animationCrossfadeDuration: 1000,
+                              touchAction: TouchAction.none,
+                              cameraOrbit: "45deg 65deg 10m",
+                              cameraTarget: '0 1m 0',
+                              disableTap: true,
+                              relatedJs: modelViewerScript),
+                        )),
                   ],
                 ),
               ],

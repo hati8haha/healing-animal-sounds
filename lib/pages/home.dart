@@ -18,6 +18,16 @@ class _HomePageState extends State<HomePage> {
     '御姊',
     '萌妹'
   ];
+  final List<String> animalsList = [
+    'Crow_Animations',
+    'Elephant_Animations',
+    'Husky_Animations',
+    'Rhino_Animations',
+    'Snake_Animations',
+    'Tortoise_Animations',
+    'Walrus_Animations',
+    'WhiteCat_Animations'
+  ];
   int selectedIndex = 0;
   final ScrollController _scrollController = ScrollController();
 
@@ -138,7 +148,7 @@ class _HomePageState extends State<HomePage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => SoundPage()),
+                                      builder: (context) => SoundPage(animalName: animalsList[index],)),
                                 );
                               },
                               child: Container(
@@ -148,7 +158,7 @@ class _HomePageState extends State<HomePage> {
                                     width: 150,
                                     height: 150,
                                     child: Image.asset(
-                                      'assets/images/animals/bird.png', // Replace with your image asset path
+                                     'assets/images/animals/${animalsList[index]}.png', // Replace with your image asset path
                                       fit: BoxFit.contain,
                                     ),
                                   ),

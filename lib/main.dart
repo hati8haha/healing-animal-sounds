@@ -74,7 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
         page = HomePage();
         break;
       case 2:
-        page = SoundPage();
+        page = SoundPage(animalName: 'Crow_Animations',);
         break;
       case 3:
         page = SettingPage();
