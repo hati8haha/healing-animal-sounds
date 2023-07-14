@@ -91,93 +91,109 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
         body: SafeArea(
-          child: Container(
-            padding: EdgeInsets.all(10.0),
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/background/home-bg.png'),
-                fit: BoxFit.cover,
-              ),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 10.0),
-                SizedBox(
-                  width: double.infinity,
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    controller: _scrollController,
-                    child: Row(
-                      children: [
-                        for (int index = 0;
-                            index < buttonLabels.length;
-                            index++)
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 5.0),
-                            child: ChoiceChip(
-                              backgroundColor: Colors.white,
-                              label: Text(buttonLabels[index]),
-                              selected: selectedIndex == index,
-                              selectedColor: Colors.blue[100],
-                              onSelected: (bool selected) {
-                                setState(() {
-                                  selectedIndex = selected ? index : -1;
-                                });
-                                scrollToSelectedButton();
-                              },
-                            ),
-                          ),
-                      ],
-                    ),
+          child: Stack(
+            children: [
+              Container(
+                padding: EdgeInsets.all(10.0),
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/images/background/home-bg.png'),
+                    fit: BoxFit.cover,
                   ),
                 ),
-                SizedBox(height: 20.0),
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.all(10.0),
-                    child: GridView.count(
-                      crossAxisCount: 2,
-                      children: List.generate(8, (index) {
-                        return Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => SoundPage(animalName: animalsList[index],)),
-                                );
-                              },
-                              child: Container(
-                                color: Colors.grey[200],
-                                child: Center(
-                                  child: SizedBox(
-                                    width: 150,
-                                    height: 150,
-                                    child: Image.asset(
-                                     'assets/images/animals/${animalsList[index]}.png', // Replace with your image asset path
-                                      fit: BoxFit.contain,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 10.0),
+                    SizedBox(
+                      width: double.infinity,
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        controller: _scrollController,
+                        child: Row(
+                          children: [
+                            for (int index = 0;
+                                index < buttonLabels.length;
+                                index++)
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 5.0),
+                                child: ChoiceChip(
+                                  backgroundColor: Colors.white,
+                                  label: Text(buttonLabels[index]),
+                                  selected: selectedIndex == index,
+                                  selectedColor: Colors.blue[100],
+                                  onSelected: (bool selected) {
+                                    setState(() {
+                                      selectedIndex = selected ? index : -1;
+                                    });
+                                    scrollToSelectedButton();
+                                  },
+                                ),
+                              ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 20.0),
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.all(10.0),
+                        child: GridView.count(
+                          crossAxisCount: 2,
+                          children: List.generate(8, (index) {
+                            return Padding(
+                              padding: const EdgeInsets.all(15.0),
+                              child: ClipRRect(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => SoundPage(
+                                                animalName: animalsList[index],
+                                              )),
+                                    );
+                                  },
+                                  child: Container(
+                                    color: Colors.grey[200],
+                                    child: Center(
+                                      child: SizedBox(
+                                        width: 150,
+                                        height: 150,
+                                        child: Image.asset(
+                                          'assets/images/animals/${animalsList[index]}.png', // Replace with your image asset path
+                                          fit: BoxFit.contain,
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ),
-                        );
-                      }),
+                            );
+                          }),
+                        ),
+                      ),
                     ),
+                  ],
+                ),
+              ),
+              Positioned(
+                bottom: 16,
+                right: 16,
+                child: GestureDetector(
+                  onTap: () {
+                    // go to VIP page
+                  },
+                  child: Image.asset(
+                    'assets/images/others/vip.png',
+                    width: 80,
+                    height: 80,
                   ),
                 ),
-                Align(
-                  alignment: Alignment.bottomRight,
-                  child:
-                      Image(image: AssetImage("assets/images/others/vip.png")),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
