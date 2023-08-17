@@ -8,28 +8,43 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String selectCategory = '全部';
+  List<String> lockAnimails = ['WhiteCat_Animations', 'Walrus_Animations'];
   final List<String> buttonLabels = [
     '全部',
-    '森林',
-    '地獄生物',
-    '吉娃娃',
-    '蘿莉',
-    '正太',
-    '御姊',
-    '萌妹'
+    '肉食系',
+    '草食系',
+    '雜食系',
   ];
-  final List<String> animalsList = [
-    'Crow_Animations',
-    'Elephant_Animations',
-    'Husky_Animations',
-    'Rhino_Animations',
-    'Snake_Animations',
-    'Tortoise_Animations',
-    'Walrus_Animations',
-    'WhiteCat_Animations'
-  ];
+  Map<String, List<String>> animalsMap = {
+    '肉食系': ['Snake_Animations', 'WhiteCat_Animations'],
+    '草食系': ['Tortoise_Animations'],
+    '雜食系': [
+      'Crow_Animations',
+      'Elephant_Animations',
+      'Husky_Animations',
+      'Rhino_Animations',
+      'Walrus_Animations'
+    ],
+  };
+
+  void setTotalCategory() {
+    List<String> allValues = [];
+    animalsMap.forEach((key, value) {
+      allValues.addAll(value);
+    });
+
+    animalsMap['全部'] = allValues;
+  }
+
   int selectedIndex = 0;
   final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    setTotalCategory();
+  }
 
   @override
   void dispose() {
@@ -64,6 +79,37 @@ class _HomePageState extends State<HomePage> {
         curve: Curves.easeInOut,
       );
     }
+  }
+
+  void showVIPDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Image.asset('assets/images/others/animal_bg.png'),
+              SizedBox(height: 8),
+              Text('免廣告！！'),
+              Text('解鎖更多療癒動物！！'),
+              Text(
+                '超過50+種動物聲音陪伴你的每一天',
+                style: TextStyle(fontSize: 12, color: Colors.grey),
+              ),
+            ],
+          ),
+          actions: [
+            VipDialog(
+              onPressed: () {
+                // go to VIP page
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -125,6 +171,7 @@ class _HomePageState extends State<HomePage> {
                                   onSelected: (bool selected) {
                                     setState(() {
                                       selectedIndex = selected ? index : -1;
+                                      selectCategory = buttonLabels[index];
                                     });
                                     scrollToSelectedButton();
                                   },
@@ -140,7 +187,8 @@ class _HomePageState extends State<HomePage> {
                         padding: EdgeInsets.all(10.0),
                         child: GridView.count(
                           crossAxisCount: 2,
-                          children: List.generate(8, (index) {
+                          children: List.generate(
+                              animalsMap[selectCategory]!.length, (index) {
                             return Padding(
                               padding: const EdgeInsets.all(15.0),
                               child: ClipRRect(
@@ -148,25 +196,54 @@ class _HomePageState extends State<HomePage> {
                                     BorderRadius.all(Radius.circular(10)),
                                 child: GestureDetector(
                                   onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => SoundPage(
-                                                animalName: animalsList[index],
-                                              )),
-                                    );
+                                    String animalName =
+                                        animalsMap[selectCategory]!
+                                            .elementAt(index);
+                                    if (lockAnimails.contains(animalName)) {
+                                      showVIPDialog();
+                                      return;
+                                    } else {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => SoundPage(
+                                                  animalName: animalName,
+                                                )),
+                                      );
+                                    }
                                   },
                                   child: Container(
                                     color: Colors.grey[200],
-                                    child: Center(
-                                      child: SizedBox(
-                                        width: 150,
-                                        height: 150,
-                                        child: Image.asset(
-                                          'assets/images/animals/${animalsList[index]}.png', // Replace with your image asset path
-                                          fit: BoxFit.contain,
+                                    child: Stack(
+                                      children: [
+                                        Center(
+                                          child: SizedBox(
+                                            width: 150,
+                                            height: 150,
+                                            child: Image.asset(
+                                              'assets/images/animals/${animalsMap[selectCategory]!.elementAt(index)}.png',
+                                              fit: BoxFit.contain,
+                                            ),
+                                          ),
                                         ),
-                                      ),
+                                        if (lockAnimails.contains(
+                                            animalsMap[selectCategory]!
+                                                .elementAt(index))) // 條件判斷
+                                          Center(
+                                            child: Container(
+                                              color: Colors.black
+                                                  .withOpacity(0.5), // 設定透明度
+                                              child: Text(
+                                                '升級為VIP解鎖',
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                      ],
                                     ),
                                   ),
                                 ),
@@ -184,7 +261,7 @@ class _HomePageState extends State<HomePage> {
                 right: 16,
                 child: GestureDetector(
                   onTap: () {
-                    // go to VIP page
+                    showVIPDialog();
                   },
                   child: Image.asset(
                     'assets/images/others/vip.png',
@@ -196,6 +273,27 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class VipDialog extends StatelessWidget {
+  final VoidCallback onPressed;
+
+  const VipDialog({
+    Key? key,
+    required this.onPressed,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      color: Colors.black,
+      child: TextButton(
+        onPressed: onPressed,
+        child: const Text('升級VIP', style: TextStyle(color: Colors.white)),
       ),
     );
   }
