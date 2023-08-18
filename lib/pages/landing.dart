@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:model_viewer_plus/model_viewer_plus.dart';
 
 class LandingPage extends StatelessWidget {
   @override
@@ -19,9 +20,17 @@ class LandingPage extends StatelessWidget {
                 Text('App name'),
                 Text('小動物們蠢蠢欲動了！'),
                 Text('今天陪伴你的會是誰呢？'),
-                Image(
-                    image: AssetImage('assets/images/animals/bird.png'),
-                    fit: BoxFit.fitHeight),
+                SizedBox(
+                  width: 400,
+                  height: 400,
+                  child: ModelViewer(
+                    src: 'assets/animals/Dove_Animations.gltf',
+                    autoPlay: true,
+                    animationName: 'Idle_A',
+                    animationCrossfadeDuration: 1000,
+                    touchAction: TouchAction.none,
+                  ),
+                )
               ],
             ))),
       ),

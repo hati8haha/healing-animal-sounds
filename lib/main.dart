@@ -18,10 +18,12 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => MyAppState(),
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Namer App',
         theme: ThemeData(
           useMaterial3: true,
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueGrey),
+          fontFamily: 'Poppins',
         ),
         home: MyHomePage(),
       ),
@@ -72,7 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
         page = HomePage();
         break;
       case 2:
-        page = SoundPage();
+        page = SoundPage(animalName: 'Crow_Animations',);
         break;
       case 3:
         page = SettingPage();

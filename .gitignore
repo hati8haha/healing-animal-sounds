@@ -31,7 +31,6 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 /build/
-
 # Symbolication related
 app.*.symbols
 
@@ -44,4 +43,8 @@ app.*.map.json
 /android/app/release
 
 # 3d models
+<<<<<<< HEAD
 /assets/animals/
+=======
+/assets/animals/*.gltf
+>>>>>>> 4f062a330af1f19d681c07df4eacd7c023cbd3ef
