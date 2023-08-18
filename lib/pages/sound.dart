@@ -17,6 +17,7 @@ class SoundPage extends StatefulWidget {
 }
 
 class _SoundPageState extends State<SoundPage> {
+  bool showMenuList = false;
   bool showMusicMenu = false;
   bool showBgMenu = false;
   bool showFilterMenu = false;
@@ -65,211 +66,26 @@ class _SoundPageState extends State<SoundPage> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: SafeArea(
-          child: Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/background/$selectedOption'),
-                fit: BoxFit.cover,
-              ),
-            ),
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 25.0, horizontal: 10.0),
-                  child: Row(
-                    children: [
-                      IconButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          icon: Icon(
-                            Icons.keyboard_arrow_left,
-                          ))
-                    ],
-                  ),
+          child: GestureDetector(
+            onTap: () {
+              setState(() {
+                showMenuList = false;
+              });
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/images/background/$selectedOption'),
+                  fit: BoxFit.cover,
                 ),
-                SizedBox(height: 50),
-                Column(
-                  children: [
-                    CountdownTimer(duration: selectDuration),
-                    SizedBox(
-                      height: 70,
-                      child: ListTile(
-                        trailing: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              showMusicMenu = !showMusicMenu;
-                              showFilterMenu = false;
-                              showBgMenu = false;
-                            });
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: const Color.fromARGB(100, 101, 110, 119),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            padding: EdgeInsets.all(8),
-                            child: Icon(Icons.music_video),
-                          ),
-                        ),
-                        subtitle: Visibility(
-                          visible: showMusicMenu,
-                          child: Align(
-                            alignment: Alignment.centerRight,
-                            child: Container(
-                              color: Colors.blueGrey[100],
-                              width: 125,
-                              padding: const EdgeInsets.all(1.0),
-                              child: ListView.builder(
-                                itemCount: backgroundMusic.length,
-                                itemBuilder: (context, index) {
-                                  return Container(
-                                    margin: EdgeInsets.only(bottom: 5),
-                                    child: Align(
-                                      alignment: Alignment.center,
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          setState(() async {
-                                            await player.stop();
-                                            String path = optionMusic[
-                                                backgroundMusic[index]]!;
-                                            await player.play(
-                                                AssetSource('audio/$path'));
-                                          });
-                                        },
-                                        child: Text(backgroundMusic[index],
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 18,
-                                            )),
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 8),
-                    SizedBox(
-                      height: 56,
-                      child: ListTile(
-                        trailing: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              showBgMenu = !showBgMenu;
-                              showFilterMenu = false;
-                              showMusicMenu = false;
-                            });
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: const Color.fromARGB(100, 101, 110, 119),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            padding: EdgeInsets.all(8),
-                            child: Icon(Icons.forest),
-                          ),
-                        ),
-                        subtitle: Visibility(
-                          visible: showBgMenu,
-                          child: Align(
-                            alignment: Alignment.centerRight,
-                            child: Container(
-                              color: Colors.blueGrey[100],
-                              width: 125,
-                              padding: const EdgeInsets.all(1.0),
-                              child: ListView.builder(
-                                itemCount: backgroundImages.length,
-                                itemBuilder: (context, index) {
-                                  return Container(
-                                    margin: EdgeInsets.only(bottom: 5),
-                                    child: Align(
-                                      alignment: Alignment.center,
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          setState(() {
-                                            selectedOption = optionImages[
-                                                backgroundImages[index]]!;
-                                          });
-                                        },
-                                        child: Text(backgroundImages[index],
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 18,
-                                            )),
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 8),
-                    SizedBox(
-                      height: 56,
-                      child: ListTile(
-                        trailing: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              showFilterMenu = !showFilterMenu;
-                              showMusicMenu = false;
-                              showBgMenu = false;
-                            });
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: const Color.fromARGB(100, 101, 110, 119),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            padding: EdgeInsets.all(8),
-                            child: Icon(Icons.filter_list),
-                          ),
-                        ),
-                        subtitle: Visibility(
-                          visible: showFilterMenu,
-                          child: Align(
-                            alignment: Alignment.centerRight,
-                            child: Container(
-                              color: Colors.blueGrey[100],
-                              width: 125,
-                              padding: const EdgeInsets.all(1.0),
-                              child: ListView.builder(
-                                itemCount: filterDutation.length,
-                                itemBuilder: (context, index) {
-                                  return Container(
-                                    margin: EdgeInsets.only(bottom: 5),
-                                    child: Align(
-                                      alignment: Alignment.center,
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          setState(() {
-                                            selectDuration = optionDuration[
-                                                filterDutation[index]]!;
-                                          });
-                                        },
-                                        child: Text(filterDutation[index],
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 18,
-                                            )),
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
+              ),
+              child: Stack(
+                children: [
+                  Positioned(
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    child: Container(
                         alignment: Alignment.center,
                         padding: EdgeInsets.all(16.0),
                         child: SizedBox(
@@ -286,13 +102,108 @@ class _SoundPageState extends State<SoundPage> {
                               disableTap: true,
                               relatedJs: modelViewerScript),
                         )),
-                  ],
-                ),
-              ],
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 25.0, horizontal: 10.0),
+                        child: Row(
+                          children: [
+                            IconButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                icon: Icon(
+                                  Icons.keyboard_arrow_left,
+                                ))
+                          ],
+                        ),
+                      ),
+                      Center(child: CountdownTimer(duration: selectDuration)),
+                      SizedBox(height: 50),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                showMenuList = !showMenuList;
+                              });
+                            },
+                            child: Container(
+                              margin: EdgeInsets.only(right: 8),
+                              decoration: BoxDecoration(
+                                color: const Color.fromARGB(100, 101, 110, 119),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              padding: EdgeInsets.all(8),
+                              child: Icon(Icons.expand_more),
+                            ),
+                          ),
+                          if (showMenuList)
+                            Container(
+                              width: 175,
+                              alignment: Alignment.centerRight,
+                              decoration: BoxDecoration(
+                                color: Colors.blueGrey[100],
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: ListView(
+                                padding: EdgeInsets.all(8),
+                                shrinkWrap: true,
+                                children: [
+                                  _buildExpansionTile('音樂', backgroundMusic),
+                                  _buildExpansionTile('背景', backgroundImages),
+                                  _buildExpansionTile('時間', filterDutation),
+                                ],
+                              ),
+                            ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildExpansionTile(String title, List<String> items) {
+    return ExpansionTile(
+      title: Text(title),
+      children: [
+        SizedBox(
+          height: 100,
+          child: SingleChildScrollView(
+            child: Column(
+              children: items
+                  .map((item) => ListTile(
+                        title: Text(item),
+                        onTap: () {
+                          setState(() async {
+                            if (title == '音樂') {
+                              await player.stop();
+                              String path = optionMusic[item]!;
+                              await player.play(AssetSource('audio/$path'));
+                            } else if (title == '背景') {
+                              selectedOption = optionImages[item]!;
+                            } else if (title == '時間') {
+                              selectDuration = optionDuration[item]!;
+                            }
+                          });
+                        },
+                      ))
+                  .toList(),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
