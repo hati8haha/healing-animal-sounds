@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:healing_animal_sounds/pages/setting.dart';
 import 'package:healing_animal_sounds/pages/sound.dart';
+import '../ad_helper.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -8,6 +10,20 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late BannerAd _bannerAd;
+
+  bool _isBannerAdReady = false;
+
+  late InterstitialAd _interstitialAd;
+
+  // ignore: unused_field
+  bool _isInterstitialAdReady = false;
+
+  // ignore: unused_field
+  bool _isRewardedAdReady = false;
+
+  // ignore: unused_field
+  RewardedAd? _rewardedAd;
   String selectCategory = '全部';
   List<String> lockAnimails = ['WhiteCat_Animations', 'Walrus_Animations'];
   final List<String> buttonLabels = [
@@ -44,12 +60,66 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     setTotalCategory();
+    _bannerAd = BannerAd(
+        // Change Banner Size According to Ur Need
+        size: AdSize.mediumRectangle,
+        adUnitId: AdHelper.bannerAdUnitId,
+        listener: BannerAdListener(onAdLoaded: (_) {
+          setState(() {
+            _isBannerAdReady = true;
+          });
+        }, onAdFailedToLoad: (ad, LoadAdError error) {
+          print("Failed to Load A Banner Ad${error.message}");
+          _isBannerAdReady = false;
+          ad.dispose();
+        }),
+        request: AdRequest())
+      ..load();
+    //Interstitial Ads
+    InterstitialAd.load(
+        adUnitId: AdHelper.interstitialAdUnitId,
+        request: AdRequest(),
+        adLoadCallback: InterstitialAdLoadCallback(onAdLoaded: (ad) {
+          _interstitialAd = ad;
+          _isInterstitialAdReady = true;
+        }, onAdFailedToLoad: (LoadAdError error) {
+          print("failed to Load Interstitial Ad ${error.message}");
+        }));
+
+    _loadRewardedAd();
+  }
+
+  void _loadRewardedAd() {
+    RewardedAd.load(
+      adUnitId: AdHelper.rewardedAdUnitId,
+      request: AdRequest(),
+      rewardedAdLoadCallback: RewardedAdLoadCallback(onAdLoaded: (ad) {
+        _rewardedAd = ad;
+        ad.fullScreenContentCallback =
+            FullScreenContentCallback(onAdDismissedFullScreenContent: (ad) {
+          setState(() {
+            _isRewardedAdReady = false;
+          });
+          _loadRewardedAd();
+        });
+        setState(() {
+          _isRewardedAdReady = true;
+        });
+      }, onAdFailedToLoad: (error) {
+        print('Failed to load a rewarded ad: ${error.message}');
+        setState(() {
+          _isRewardedAdReady = false;
+        });
+      }),
+    );
   }
 
   @override
   void dispose() {
     _scrollController.dispose();
     super.dispose();
+    _bannerAd.dispose();
+    _interstitialAd.dispose();
   }
 
   void scrollToSelectedButton() {
@@ -150,6 +220,14 @@ class _HomePageState extends State<HomePage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    SizedBox(height: 20),
+                    if (_isBannerAdReady)
+                      SizedBox(
+                        height: _bannerAd.size.height.toDouble(),
+                        width: _bannerAd.size.width.toDouble(),
+                        child: AdWidget(ad: _bannerAd),
+                      ),
+                    SizedBox(height: 20),
                     SizedBox(height: 10.0),
                     SizedBox(
                       width: double.infinity,

@@ -5,8 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import './pages/landing.dart';
 import './pages/home.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  // Mobile App Instance
+  MobileAds.instance.initialize();
   runApp(MyApp());
 }
 
@@ -63,6 +67,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   var selectedIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     Widget page;
@@ -74,7 +79,9 @@ class _MyHomePageState extends State<MyHomePage> {
         page = HomePage();
         break;
       case 2:
-        page = SoundPage(animalName: 'Crow_Animations',);
+        page = SoundPage(
+          animalName: 'Crow_Animations',
+        );
         break;
       case 3:
         page = SettingPage();
