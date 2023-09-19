@@ -1,15 +1,22 @@
-import 'package:english_words/english_words.dart';
-import 'package:healing_animal_sounds/pages/sound.dart';
-import 'package:healing_animal_sounds/pages/setting.dart';
 import 'package:flutter/material.dart';
+import 'package:healing_animal_sounds/pages/login.dart';
+import 'package:healing_animal_sounds/pages/setting.dart';
+import 'package:healing_animal_sounds/pages/sound.dart';
 import 'package:provider/provider.dart';
-import './pages/landing.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
 import './pages/home.dart';
+import './pages/landing.dart';
+void main() async {
+ WidgetsFlutterBinding.ensureInitialized();
+ await Firebase.initializeApp(
+   options: DefaultFirebaseOptions.currentPlatform,
+ );
 
-void main() {
-  runApp(MyApp());
+
+ runApp(const MyApp());
 }
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -32,28 +39,12 @@ class MyApp extends StatelessWidget {
 }
 
 class MyAppState extends ChangeNotifier {
-  var current = WordPair.random();
 
   void getNext() {
-    current = WordPair.random();
     notifyListeners();
   }
 
-  var favorites = <WordPair>[];
 
-  void toggleFavorite() {
-    if (favorites.contains(current)) {
-      favorites.remove(current);
-    } else {
-      favorites.add(current);
-    }
-    notifyListeners();
-  }
-
-  void clearFavorites() {
-    favorites = [];
-    notifyListeners();
-  }
 }
 
 class MyHomePage extends StatefulWidget {
@@ -74,10 +65,15 @@ class _MyHomePageState extends State<MyHomePage> {
         page = HomePage();
         break;
       case 2:
-        page = SoundPage(animalName: 'Crow_Animations',);
+        page = SoundPage(
+          animalName: 'Crow_Animations',
+        );
         break;
       case 3:
         page = SettingPage();
+        break;
+      case 4:
+        page = LoginPage();
         break;
       default:
         page = HomePage();
@@ -109,6 +105,7 @@ class _MyHomePageState extends State<MyHomePage> {
               icon: Icon(Icons.settings),
               label: 'Setting',
             ),
+            NavigationDestination(icon: Icon(Icons.login), label: 'login')
           ],
         ),
         body: Row(
