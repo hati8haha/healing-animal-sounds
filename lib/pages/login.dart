@@ -47,7 +47,18 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<void> _handleSignIn() async {
     try {
-      await signInWithGoogle();                          
+      final GoogleSignInAccount? googleSignInAccount = await _googleSignIn.signIn();
+      if (googleSignInAccount != null) {
+        final AuthCredential credential = GoogleAuthProvider.credential(
+          idToken: googleSignInAccount.id,
+          accessToken: googleSignInAccount.email,
+        );
+
+        // await _firebaseAuth.signInWithCredential(credential);
+        await FirebaseAuth.instance.signInWithCredential(credential);
+      }
+      debugPrint('google sign in succeed!');
+      debugPrint(googleSignInAccount?.email);                             
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -75,3 +86,4 @@ Future<UserCredential> signInWithGoogle() async {
   // Once signed in, return the UserCredential
   return await FirebaseAuth.instance.signInWithCredential(credential);
 }
+

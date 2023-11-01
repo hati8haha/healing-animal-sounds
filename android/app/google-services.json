@@ -7,7 +7,7 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:940230830659:android:81f8e288aa4c5823e6c2f6",
+        "mobilesdk_app_id": "1:940230830659:android:e770120e0d3d6a3ee6c2f6",
         "android_client_info": {
           "package_name": "com.example.complete"
         }
@@ -49,6 +49,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "940230830659-lp90e9g0fkbi8eevmtstgaso7d4nbde3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.healing_animal_sounds",
+            "certificate_hash": "160bccc5b37165637630d7098ee6a2360bbc0d32"
+          }
+        },
         {
           "client_id": "940230830659-sad91r6gq1qbk6ac14b9hpmdtt9u6lhe.apps.googleusercontent.com",
           "client_type": 3

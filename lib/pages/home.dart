@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:healing_animal_sounds/pages/setting.dart';
 import 'package:healing_animal_sounds/pages/sound.dart';
+import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -134,7 +135,32 @@ class _HomePageState extends State<HomePage> {
                 );
               },
             ),
+            IconButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute<ProfileScreen>(
+                          builder: (context) => ProfileScreen(
+                                  appBar:
+                                      AppBar(title: const Text('User Profile')),
+                                  actions: [
+                                    SignedOutAction((context) {
+                                      Navigator.of(context).pop();
+                                    })
+                                  ],
+                                  children: [
+                                    const Divider(),
+                                    Padding(
+                                        padding: const EdgeInsets.all(2),
+                                        child: AspectRatio(
+                                          aspectRatio: 1,
+                                          child: Text('image'),
+                                        )),
+                                  ])));
+                },
+                icon: const Icon(Icons.person))
           ],
+          automaticallyImplyLeading: false,
         ),
         body: SafeArea(
           child: Stack(

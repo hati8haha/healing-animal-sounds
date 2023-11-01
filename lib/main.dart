@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:healing_animal_sounds/pages/auth_gate.dart';
 import 'package:healing_animal_sounds/pages/login.dart';
 import 'package:healing_animal_sounds/pages/setting.dart';
 import 'package:healing_animal_sounds/pages/sound.dart';
@@ -8,15 +9,16 @@ import 'firebase_options.dart';
 
 import './pages/home.dart';
 import './pages/landing.dart';
+
 void main() async {
- WidgetsFlutterBinding.ensureInitialized();
- await Firebase.initializeApp(
-   options: DefaultFirebaseOptions.currentPlatform,
- );
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
-
- runApp(const MyApp());
+  runApp(const MyApp());
 }
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -39,12 +41,9 @@ class MyApp extends StatelessWidget {
 }
 
 class MyAppState extends ChangeNotifier {
-
   void getNext() {
     notifyListeners();
   }
-
-
 }
 
 class MyHomePage extends StatefulWidget {
@@ -62,19 +61,20 @@ class _MyHomePageState extends State<MyHomePage> {
         page = LandingPage();
         break;
       case 1:
-        page = HomePage();
+        page = AuthGate();
         break;
       case 2:
+        page = HomePage();
+        break;
+      case 3:
         page = SoundPage(
           animalName: 'Crow_Animations',
         );
         break;
-      case 3:
+      case 4:
         page = SettingPage();
         break;
-      case 4:
-        page = LoginPage();
-        break;
+
       default:
         page = HomePage();
     }
@@ -92,6 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
               icon: Icon(Icons.start),
               label: 'Landing',
             ),
+            NavigationDestination(icon: Icon(Icons.login), label: 'login'),
             NavigationDestination(
               icon: Icon(Icons.home),
               label: 'Home',
@@ -105,7 +106,6 @@ class _MyHomePageState extends State<MyHomePage> {
               icon: Icon(Icons.settings),
               label: 'Setting',
             ),
-            NavigationDestination(icon: Icon(Icons.login), label: 'login')
           ],
         ),
         body: Row(
