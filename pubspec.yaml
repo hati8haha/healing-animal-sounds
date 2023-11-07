@@ -37,8 +37,6 @@ flutter:
     - assets/images/others/
     - assets/audio/
     - assets/animals/
-    - assets/theme/light.json
-    - assets/theme/dark.json
   fonts:
     - family: Poppins
       fonts:

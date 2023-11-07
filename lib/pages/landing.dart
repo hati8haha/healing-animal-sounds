@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:model_viewer_plus/model_viewer_plus.dart';
