@@ -214,11 +214,10 @@ class _HomePageState extends State<HomePage> {
                                     );
                                   }
                                 },
-                                child: Container(
-                                  color: Colors.grey[200],
-                                  child: Stack(
-                                    children: [
-                                      Center(
+                                child: Stack(
+                                  children: [
+                                    Card(
+                                      child: Center(
                                         child: SizedBox(
                                           width: 150,
                                           height: 150,
@@ -228,25 +227,25 @@ class _HomePageState extends State<HomePage> {
                                           ),
                                         ),
                                       ),
-                                      if (lockAnimails.contains(
-                                          animalsMap[selectCategory]!
-                                              .elementAt(index))) // 條件判斷
-                                        Center(
-                                          child: Container(
-                                            color: Colors.black
-                                                .withOpacity(0.5), // 設定透明度
-                                            child: Text(
-                                              '升級為VIP解鎖',
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.bold,
-                                              ),
+                                    ),
+                                    if (lockAnimails.contains(
+                                        animalsMap[selectCategory]!
+                                            .elementAt(index))) // 條件判斷
+                                      Center(
+                                        child: Container(
+                                          color: Colors.black
+                                              .withOpacity(0.5), // 設定透明度
+                                          child: Text(
+                                            '升級為VIP解鎖',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
                                             ),
                                           ),
                                         ),
-                                    ],
-                                  ),
+                                      ),
+                                  ],
                                 ),
                               ),
                             ),
