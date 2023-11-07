@@ -27,9 +27,7 @@ class _SettingPageState extends State<SettingPage> {
     return StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            home: Scaffold(
+          return Scaffold(
               body: SafeArea(
                 child: Column(
                   children: <Widget>[
@@ -167,8 +165,7 @@ class _SettingPageState extends State<SettingPage> {
                   ],
                 ),
               ),
-            ),
-          );
+            );
         });
   }
 }

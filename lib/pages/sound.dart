@@ -62,9 +62,7 @@ class _SoundPageState extends State<SoundPage> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
+    return Scaffold(
         body: SafeArea(
           child: GestureDetector(
             onTap: () {
@@ -170,8 +168,7 @@ class _SoundPageState extends State<SoundPage> {
             ),
           ),
         ),
-      ),
-    );
+      );
   }
 
   Widget _buildExpansionTile(String title, List<String> items) {

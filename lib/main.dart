@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:healing_animal_sounds/pages/auth_gate.dart';
-import 'package:healing_animal_sounds/pages/login.dart';
 import 'package:healing_animal_sounds/pages/setting.dart';
 import 'package:healing_animal_sounds/pages/sound.dart';
-import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
@@ -24,101 +22,100 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => MyAppState(),
-      child: MaterialApp(
+    return  MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Namer App',
-        theme: ThemeData(
-          useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueGrey),
-          fontFamily: 'Poppins',
-        ),
-        home: MyHomePage(),
-      ),
+        title: '會動的療癒夥伴－動物叫聲、白噪音、放鬆、睡眠、紓壓',
+        theme: _kShrineTheme,
+        initialRoute: '/landing',
+        routes: {
+          '/landing': ( context) => LandingPage(),
+          '/auth': (context) => AuthGate(),
+          '/home': (context) => HomePage(),
+          '/sound': (context) => SoundPage(
+                animalName: 'Crow_Animations',
+              ),
+          '/setting': (context) => SettingPage(),
+        },
     );
   }
 }
 
-class MyAppState extends ChangeNotifier {
-  void getNext() {
-    notifyListeners();
-  }
+final ThemeData _kShrineTheme = _buildShrineTheme();
+
+ThemeData _buildShrineTheme() {
+  final ThemeData base = ThemeData.light(useMaterial3: true);
+  return base.copyWith(
+    colorScheme: base.colorScheme.copyWith(
+      primary: Colors.blue,
+      onPrimary: Colors.blue[900],
+      secondary: Colors.greenAccent,
+      error: Colors.redAccent,
+    ),
+    textTheme: _buildShrineTextTheme(base.textTheme),
+    textSelectionTheme: const TextSelectionThemeData(
+      selectionColor: Colors.blueAccent,
+    ),
+    appBarTheme: const AppBarTheme(
+      foregroundColor: Colors.blueAccent,
+      backgroundColor: Colors.amberAccent,
+    ),
+
+  );
 }
 
-class MyHomePage extends StatefulWidget {
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  var selectedIndex = 0;
-  @override
-  Widget build(BuildContext context) {
-    Widget page;
-    switch (selectedIndex) {
-      case 0:
-        page = LandingPage();
-        break;
-      case 1:
-        page = AuthGate();
-        break;
-      case 2:
-        page = HomePage();
-        break;
-      case 3:
-        page = SoundPage(
-          animalName: 'Crow_Animations',
-        );
-        break;
-      case 4:
-        page = SettingPage();
-        break;
-
-      default:
-        page = HomePage();
-    }
-    return LayoutBuilder(builder: (context, constraints) {
-      return Scaffold(
-        bottomNavigationBar: NavigationBar(
-          onDestinationSelected: (int index) {
-            setState(() {
-              selectedIndex = index;
-            });
-          },
-          selectedIndex: selectedIndex,
-          destinations: const <Widget>[
-            NavigationDestination(
-              icon: Icon(Icons.start),
-              label: 'Landing',
-            ),
-            NavigationDestination(icon: Icon(Icons.login), label: 'login'),
-            NavigationDestination(
-              icon: Icon(Icons.home),
-              label: 'Home',
-            ),
-            NavigationDestination(
-              icon: Icon(Icons.speaker),
-              label: 'Sound',
-            ),
-            NavigationDestination(
-              selectedIcon: Icon(Icons.bookmark),
-              icon: Icon(Icons.settings),
-              label: 'Setting',
-            ),
-          ],
+TextTheme _buildShrineTextTheme(TextTheme base) {
+  return base
+      .copyWith(
+        headlineSmall: base.headlineSmall!.copyWith(
+          fontWeight: FontWeight.w500,
         ),
-        body: Row(
-          children: [
-            Expanded(
-              child: Container(
-                color: Theme.of(context).colorScheme.primaryContainer,
-                child: page,
-              ),
-            ),
-          ],
+        titleLarge: base.titleLarge!.copyWith(
+          fontSize: 18.0,
         ),
+        bodySmall: base.bodySmall!.copyWith(
+          fontWeight: FontWeight.w400,
+          fontSize: 14.0,
+        ),
+        bodyLarge: base.bodyLarge!.copyWith(
+          fontWeight: FontWeight.w500,
+          fontSize: 16.0,
+        ),
+      )
+      .apply(
+        fontFamily: 'Rubik',
+        displayColor: Colors.blueAccent[800],
+        bodyColor: Colors.blue,
       );
-    });
-  }
 }
+
+// class MyAppState extends ChangeNotifier {
+//   void getNext() {
+//     notifyListeners();
+//   }
+// }
+
+// class MyHomePage extends StatefulWidget {
+//   @override
+//   State<MyHomePage> createState() => _MyHomePageState();
+// }
+
+// class _MyHomePageState extends State<MyHomePage> {
+//   @override
+//   Widget build(BuildContext context) {
+
+//     return LayoutBuilder(builder: (context, constraints) {
+//       return Scaffold(
+//    body: Row(
+//           children: [
+//             Expanded(
+//               child: Container(
+//                 color: Theme.of(context).colorScheme.primaryContainer,
+//                 child: SizedBox(),
+//               ),
+//             ),
+//           ],
+//         ),
+//       );
+//     });
+//   }
+// }

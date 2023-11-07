@@ -16,7 +16,6 @@ class AuthGate extends StatelessWidget {
         if (!snapshot.hasData) {
           return SignInScreen(
             providers: [
-              EmailAuthProvider(),
               GoogleProvider(clientId: '940230830659-sad91r6gq1qbk6ac14b9hpmdtt9u6lhe.apps.googleusercontent.com'),
             ],
             headerBuilder: ((context, constraints, shrinkOffset) {
@@ -40,8 +39,8 @@ class AuthGate extends StatelessWidget {
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: action == AuthAction.signIn
-                    ? const Text('Welcome to FlutterFire, please sign in!')
-                    : const Text('Welcome to Flutterfire, please sign up!'),
+                    ? const Text('你好！請登入你的帳號！')
+                    : const Text('你好，請註冊帳號'),
               );
             },
             footerBuilder:  (context, action) {
