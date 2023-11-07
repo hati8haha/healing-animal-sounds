@@ -23,6 +23,15 @@ class AuthGate extends StatelessWidget {
               return Padding(
                 padding: const EdgeInsets.all(20),
                 child: AspectRatio(aspectRatio: 1,
+                child: Row(
+                  children: [
+                    IconButton(icon: Icon(Icons.arrow_back_rounded), onPressed: () {
+                      Navigator.of(context).pop();
+                      // Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+                    },),
+                    Text('動物白噪音')
+                  ],
+                )
                 //  child: Image.asset('asset/images/animals/bird.png')
                  ),
               );

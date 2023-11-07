@@ -43,3 +43,6 @@ flutter:
     - family: MonomaniacOne
       fonts:
         - asset: fonts/MonomaniacOne-Regular.ttf
+    - family: SocialIcons
+      fonts:
+        - asset: packages/firebase_ui_auth/fonts/SocialIcons.ttf
