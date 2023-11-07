@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 
 import 'package:healing_animal_sounds/pages/auth_gate.dart';
-import 'package:healing_animal_sounds/main.dart';
+import 'package:healing_animal_sounds/widgets/darkmode_switch.dart';
 
 class SettingPage extends StatefulWidget {
   @override
@@ -112,12 +112,9 @@ class _SettingPageState extends State<SettingPage> {
                           },
                         ),
                         ListTile(
-                          leading: Icon(Icons.dark_mode),
-                          title: Text('暗夜模式'),
-                          trailing:
-                              Switch(value: false, onChanged: (isDark) {}),
-      
-                        ),
+                            leading: Icon(Icons.dark_mode),
+                            title: Text('暗夜模式'),
+                            trailing: DarmModeSwitch()),
                         ListTile(
                           leading: Icon(Icons.emoji_events),
                           title: Text('升級VIP'),
@@ -146,9 +143,6 @@ class _SettingPageState extends State<SettingPage> {
                           leading: Icon(Icons.gpp_maybe_outlined),
                           title: Text('隱私權條款'),
                           trailing: Icon(Icons.keyboard_arrow_right),
-                          onTap: () {
-                            ///
-                          },
                         ),
                       ],
                     ),
