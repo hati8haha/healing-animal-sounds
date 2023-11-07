@@ -4,6 +4,10 @@ import 'package:healing_animal_sounds/pages/setting.dart';
 import 'package:healing_animal_sounds/pages/sound.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'package:json_theme/json_theme.dart';
+
+import 'package:flutter/services.dart'; // For rootBundle
+import 'dart:convert'; // For jsonDecode
 
 import './pages/home.dart';
 import './pages/landing.dart';
@@ -14,18 +18,32 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(const MyApp());
+  final themeLightStr = await rootBundle.loadString('assets/theme/light.json');
+  final themeLightJson = jsonDecode(themeLightStr);
+  final themeLight = ThemeDecoder.decodeThemeData(themeLightJson)!;
+  final themeDarkStr = await rootBundle.loadString('assets/theme/dark.json');
+  final themeDarkJson = jsonDecode(themeDarkStr);
+  final themeDark = ThemeDecoder.decodeThemeData(themeDarkJson)!;
+
+
+  runApp(MyApp(themeLight: themeLight, themeDark: themeDark));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+    final ThemeData themeLight;
+    final ThemeData themeDark;
+
+  const MyApp( {super.key, required this.themeLight, required this.themeDark});
+
+
 
   @override
   Widget build(BuildContext context) {
     return  MaterialApp(
         debugShowCheckedModeBanner: false,
         title: '會動的療癒夥伴－動物叫聲、白噪音、放鬆、睡眠、紓壓',
-        theme: _kShrineTheme,
+        theme: themeLight,
+        darkTheme: themeDark,
         initialRoute: '/landing',
         routes: {
           '/landing': ( context) => LandingPage(),
@@ -39,83 +57,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-final ThemeData _kShrineTheme = _buildShrineTheme();
-
-ThemeData _buildShrineTheme() {
-  final ThemeData base = ThemeData.light(useMaterial3: true);
-  return base.copyWith(
-    colorScheme: base.colorScheme.copyWith(
-      primary: Colors.blue,
-      onPrimary: Colors.blue[900],
-      secondary: Colors.greenAccent,
-      error: Colors.redAccent,
-    ),
-    textTheme: _buildShrineTextTheme(base.textTheme),
-    textSelectionTheme: const TextSelectionThemeData(
-      selectionColor: Colors.blueAccent,
-    ),
-    appBarTheme: const AppBarTheme(
-      foregroundColor: Colors.blueAccent,
-      backgroundColor: Colors.amberAccent,
-    ),
-
-  );
-}
-
-TextTheme _buildShrineTextTheme(TextTheme base) {
-  return base
-      .copyWith(
-        headlineSmall: base.headlineSmall!.copyWith(
-          fontWeight: FontWeight.w500,
-        ),
-        titleLarge: base.titleLarge!.copyWith(
-          fontSize: 18.0,
-        ),
-        bodySmall: base.bodySmall!.copyWith(
-          fontWeight: FontWeight.w400,
-          fontSize: 14.0,
-        ),
-        bodyLarge: base.bodyLarge!.copyWith(
-          fontWeight: FontWeight.w500,
-          fontSize: 16.0,
-        ),
-      )
-      .apply(
-        fontFamily: 'Rubik',
-        displayColor: Colors.blueAccent[800],
-        bodyColor: Colors.blue,
-      );
-}
-
-// class MyAppState extends ChangeNotifier {
-//   void getNext() {
-//     notifyListeners();
-//   }
-// }
-
-// class MyHomePage extends StatefulWidget {
-//   @override
-//   State<MyHomePage> createState() => _MyHomePageState();
-// }
-
-// class _MyHomePageState extends State<MyHomePage> {
-//   @override
-//   Widget build(BuildContext context) {
-
-//     return LayoutBuilder(builder: (context, constraints) {
-//       return Scaffold(
-//    body: Row(
-//           children: [
-//             Expanded(
-//               child: Container(
-//                 color: Theme.of(context).colorScheme.primaryContainer,
-//                 child: SizedBox(),
-//               ),
-//             ),
-//           ],
-//         ),
-//       );
-//     });
-//   }
-// }

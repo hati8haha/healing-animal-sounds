@@ -20,6 +20,7 @@ dependencies:
   firebase_auth: ^4.10.0
   firebase_ui_auth: ^1.7.0
   firebase_ui_oauth_google: ^1.2.10
+  json_theme: ^6.3.1
 
 dev_dependencies:
   flutter_test:
@@ -36,6 +37,8 @@ flutter:
     - assets/images/others/
     - assets/audio/
     - assets/animals/
+    - assets/theme/light.json
+    - assets/theme/dark.json
   fonts:
     - family: Poppins
       fonts:
