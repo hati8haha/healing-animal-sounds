@@ -1,0 +1,90 @@
+{
+  "project_info": {
+    "project_number": "940230830659",
+    "project_id": "healing-animal-sounds",
+    "storage_bucket": "healing-animal-sounds.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:940230830659:android:e770120e0d3d6a3ee6c2f6",
+        "android_client_info": {
+          "package_name": "com.example.complete"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "940230830659-sad91r6gq1qbk6ac14b9hpmdtt9u6lhe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBM7BSMAYswYTLjAe_IFuwWpW48uxZ1ZC0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "940230830659-jse9e2baja6gk0rqg61tcbekmd7085ji.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "940230830659-ec9jm1q55tiv73oa1skh1e4418jot0vk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.firstApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:940230830659:android:417e7d16a55fd788e6c2f6",
+        "android_client_info": {
+          "package_name": "com.example.healing_animal_sounds"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "940230830659-lp90e9g0fkbi8eevmtstgaso7d4nbde3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.healing_animal_sounds",
+            "certificate_hash": "160bccc5b37165637630d7098ee6a2360bbc0d32"
+          }
+        },
+        {
+          "client_id": "940230830659-sad91r6gq1qbk6ac14b9hpmdtt9u6lhe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBM7BSMAYswYTLjAe_IFuwWpW48uxZ1ZC0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "940230830659-jse9e2baja6gk0rqg61tcbekmd7085ji.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "940230830659-ec9jm1q55tiv73oa1skh1e4418jot0vk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.firstApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
