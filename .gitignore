@@ -44,3 +44,5 @@ app.*.map.json
 
 # 3d models
 /assets/animals/*.gltf
+/assets/animals/*.glb
+
