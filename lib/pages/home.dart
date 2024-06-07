@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:healing_animal_sounds/pages/setting.dart';
 import 'package:healing_animal_sounds/pages/sound.dart';
+import 'package:healing_animal_sounds/utils/ad_helper.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -9,6 +13,20 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late BannerAd _bannerAd;
+
+  bool _isBannerAdReady = false;
+
+  late InterstitialAd _interstitialAd;
+
+  // ignore: unused_field
+  bool _isInterstitialAdReady = false;
+
+  // ignore: unused_field
+  bool _isRewardedAdReady = false;
+
+  // ignore: unused_field
+  RewardedAd? _rewardedAd;
   String selectCategory = '全部';
   List<String> lockAnimails = ['WhiteCat_Animations', 'Walrus_Animations'];
   final List<String> buttonLabels = [
@@ -45,6 +63,61 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     setTotalCategory();
+
+    _bannerAd = BannerAd(
+        // Change Banner Size According to Ur Need
+        size: AdSize.fullBanner,
+        adUnitId: AdHelper.bannerAdUnitId,
+        listener: BannerAdListener(onAdLoaded: (_) {
+          setState(() {
+            _isBannerAdReady = true;
+          });
+        }, onAdFailedToLoad: (ad, LoadAdError error) {
+          print("Failed to Load A Banner Ad${error.message}");
+          _isBannerAdReady = false;
+          ad.dispose();
+        }),
+        request: AdRequest())
+      ..load();
+    //Interstitial Ads
+    InterstitialAd.load(
+        adUnitId: AdHelper.interstitialAdUnitId,
+        request: AdRequest(),
+        adLoadCallback: InterstitialAdLoadCallback(onAdLoaded: (ad) {
+          _interstitialAd = ad;
+          _isInterstitialAdReady = true;
+        }, onAdFailedToLoad: (LoadAdError error) {
+          print("failed to Load Interstitial Ad ${error.message}");
+        }));
+
+    _loadRewardedAd();
+  }
+
+  void _loadRewardedAd() {
+    if (Platform.isAndroid) {
+      RewardedAd.load(
+        adUnitId: AdHelper.rewardedAdUnitId,
+        request: AdRequest(),
+        rewardedAdLoadCallback: RewardedAdLoadCallback(onAdLoaded: (ad) {
+          _rewardedAd = ad;
+          ad.fullScreenContentCallback =
+              FullScreenContentCallback(onAdDismissedFullScreenContent: (ad) {
+            setState(() {
+              _isRewardedAdReady = false;
+            });
+            _loadRewardedAd();
+          });
+          setState(() {
+            _isRewardedAdReady = true;
+          });
+        }, onAdFailedToLoad: (error) {
+          print('Failed to load a rewarded ad: ${error.message}');
+          setState(() {
+            _isRewardedAdReady = false;
+          });
+        }),
+      );
+    }
   }
 
   @override
@@ -78,6 +151,22 @@ class _HomePageState extends State<HomePage> {
         0.0,
         duration: Duration(milliseconds: 300),
         curve: Curves.easeInOut,
+      );
+    }
+  }
+
+  void onTapAnimalBox(int index) {
+    String animalName = animalsMap[selectCategory]!.elementAt(index);
+    if (lockAnimails.contains(animalName)) {
+      showVIPDialog();
+      return;
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => SoundPage(
+                  animalName: animalName,
+                )),
       );
     }
   }
@@ -141,7 +230,10 @@ class _HomePageState extends State<HomePage> {
               padding: EdgeInsets.all(10.0),
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('assets/images/background/home-bg.png'),
+                  image: AssetImage(
+                      Theme.of(context).brightness == Brightness.dark
+                          ? 'assets/images/background/dark_grassland.png'
+                          : 'assets/images/background/home-bg.png'),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -171,12 +263,8 @@ class _HomePageState extends State<HomePage> {
                                   });
                                   scrollToSelectedButton();
                                 },
-                      
-                                side: BorderSide(
-                                  style: BorderStyle.none
-                                ),
+                                side: BorderSide(style: BorderStyle.none),
                                 elevation: 2,
-                                
                               ),
                             ),
                         ],
@@ -197,55 +285,12 @@ class _HomePageState extends State<HomePage> {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(10)),
                               child: GestureDetector(
-                                onTap: () {
-                                  String animalName =
-                                      animalsMap[selectCategory]!
-                                          .elementAt(index);
-                                  if (lockAnimails.contains(animalName)) {
-                                    showVIPDialog();
-                                    return;
-                                  } else {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => SoundPage(
-                                                animalName: animalName,
-                                              )),
-                                    );
-                                  }
-                                },
-                                child: Stack(
-                                  children: [
-                                    Card(
-                                      child: Center(
-                                        child: SizedBox(
-                                          width: 150,
-                                          height: 150,
-                                          child: Image.asset(
-                                            'assets/images/animals/${animalsMap[selectCategory]!.elementAt(index)}.png',
-                                            fit: BoxFit.contain,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    if (lockAnimails.contains(
-                                        animalsMap[selectCategory]!
-                                            .elementAt(index))) // 條件判斷
-                                      Center(
-                                        child: Container(
-                                          color: Colors.black
-                                              .withOpacity(0.5), // 設定透明度
-                                          child: Text(
-                                            '升級為VIP解鎖',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                  ],
+                                onTap: () => onTapAnimalBox(index),
+                                child: AnimalBox(
+                                  animalsMap: animalsMap,
+                                  selectCategory: selectCategory,
+                                  lockAnimails: lockAnimails,
+                                  index: index,
                                 ),
                               ),
                             ),
@@ -254,6 +299,12 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
+                  if (Platform.isAndroid && _isBannerAdReady)
+                    SizedBox(
+                      height: _bannerAd.size.height.toDouble(),
+                      width: MediaQuery.of(context).size.width,
+                      child: AdWidget(ad: _bannerAd),
+                    ),
                 ],
               ),
             ),
@@ -274,6 +325,56 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class AnimalBox extends StatelessWidget {
+  const AnimalBox({
+    super.key,
+    required this.animalsMap,
+    required this.selectCategory,
+    required this.lockAnimails,
+    required this.index,
+  });
+
+  final Map<String, List<String>> animalsMap;
+  final String selectCategory;
+  final List<String> lockAnimails;
+  final int index;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Card(
+          child: Center(
+            child: SizedBox(
+              width: 150,
+              height: 150,
+              child: Image.asset(
+                'assets/images/animals/${animalsMap[selectCategory]!.elementAt(index)}.png',
+                fit: BoxFit.contain,
+              ),
+            ),
+          ),
+        ),
+        if (lockAnimails
+            .contains(animalsMap[selectCategory]!.elementAt(index))) // 條件判斷
+          Center(
+            child: Container(
+              color: Colors.black.withOpacity(0.5), // 設定透明度
+              child: Text(
+                '升級為VIP解鎖',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+      ],
     );
   }
 }
