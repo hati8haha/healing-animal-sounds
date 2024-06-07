@@ -8,7 +8,7 @@ import 'package:json_theme/json_theme.dart';
 import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'utils/theme_provider.dart';
 import 'constants/theme.dart';
 import './pages/home.dart';
@@ -17,6 +17,7 @@ import './pages/landing.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   MobileAds.instance.initialize();
+
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
