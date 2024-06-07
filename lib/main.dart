@@ -19,9 +19,9 @@ void main() async {
   MobileAds.instance.initialize();
 
 
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+await Firebase.initializeApp(
+  options: DefaultFirebaseOptions.currentPlatform,
+);
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -51,7 +51,7 @@ class MyApp extends ConsumerWidget {
       initialRoute: '/landing',
       routes: {
         '/landing': (context) => LandingPage(),
-        '/auth': (context) => AuthGate(),
+        // '/auth': (context) => AuthGate(),
         '/home': (context) => HomePage(),
         '/sound': (context) => SoundPage(
               animalName: 'Crow_Animations',

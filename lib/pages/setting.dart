@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_ui_auth/firebase_ui_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 
-import 'package:healing_animal_sounds/pages/auth_gate.dart';
+// import 'package:healing_animal_sounds/pages/auth_gate.dart';
 import 'package:healing_animal_sounds/widgets/darkmode_switch.dart';
 
 class SettingPage extends StatefulWidget {
@@ -25,9 +25,9 @@ class _SettingPageState extends State<SettingPage> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<User?>(
-        stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (context, snapshot) {
+    // return StreamBuilder<User?>(
+    //     stream: FirebaseAuth.instance.authStateChanges(),
+    //     builder: (context, snapshot) {
           return Scaffold(
             body: SafeArea(
               child: Column(
@@ -85,32 +85,32 @@ class _SettingPageState extends State<SettingPage> {
                                   });
                                 },
                               )),
-                        ListTile(
-                          leading: Icon(Icons.person),
-                          title: Text('帳戶設定'),
-                          trailing: Icon(Icons.keyboard_arrow_right),
-                          onTap: () {
-                            if (!snapshot.hasData) {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => AuthGate()));
-                            } else {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute<ProfileScreen>(
-                                      builder: (context) => ProfileScreen(
-                                            appBar: AppBar(
-                                                title: const Text('個人檔案')),
-                                            actions: [
-                                              SignedOutAction((context) {
-                                                Navigator.of(context).pop();
-                                              })
-                                            ],
-                                          )));
-                            }
-                          },
-                        ),
+                        // ListTile(
+                        //   leading: Icon(Icons.person),
+                        //   title: Text('帳戶設定'),
+                        //   trailing: Icon(Icons.keyboard_arrow_right),
+                        //   onTap: () {
+                        //     if (!snapshot.hasData) {
+                        //       Navigator.push(
+                        //           context,
+                        //           MaterialPageRoute(
+                        //               builder: (context) => AuthGate()));
+                        //     } else {
+                        //       Navigator.push(
+                        //           context,
+                        //           MaterialPageRoute<ProfileScreen>(
+                        //               builder: (context) => ProfileScreen(
+                        //                     appBar: AppBar(
+                        //                         title: const Text('個人檔案')),
+                        //                     actions: [
+                        //                       SignedOutAction((context) {
+                        //                         Navigator.of(context).pop();
+                        //                       })
+                        //                     ],
+                        //                   )));
+                        //     }
+                        //   },
+                        // ),
                         ListTile(
                             leading: Icon(Icons.dark_mode),
                             title: Text('暗夜模式'),
@@ -160,6 +160,6 @@ class _SettingPageState extends State<SettingPage> {
               ),
             ),
           );
-        });
-  }
+        }
+  // }
 }

@@ -23,20 +23,11 @@ class DefaultFirebaseOptions {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for ios - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -66,4 +57,37 @@ class DefaultFirebaseOptions {
     projectId: 'healing-animal-sounds',
     storageBucket: 'healing-animal-sounds.appspot.com',
   );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyD5gB-hJraCCP3_NeqUt1YvJgcPKkXeM5g',
+    appId: '1:940230830659:ios:5d472fd33d82c004e6c2f6',
+    messagingSenderId: '940230830659',
+    projectId: 'healing-animal-sounds',
+    storageBucket: 'healing-animal-sounds.appspot.com',
+    androidClientId: '940230830659-lp90e9g0fkbi8eevmtstgaso7d4nbde3.apps.googleusercontent.com',
+    iosClientId: '940230830659-ec9jm1q55tiv73oa1skh1e4418jot0vk.apps.googleusercontent.com',
+    iosBundleId: 'com.example.firstApp',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyD5gB-hJraCCP3_NeqUt1YvJgcPKkXeM5g',
+    appId: '1:940230830659:ios:5d472fd33d82c004e6c2f6',
+    messagingSenderId: '940230830659',
+    projectId: 'healing-animal-sounds',
+    storageBucket: 'healing-animal-sounds.appspot.com',
+    androidClientId: '940230830659-lp90e9g0fkbi8eevmtstgaso7d4nbde3.apps.googleusercontent.com',
+    iosClientId: '940230830659-ec9jm1q55tiv73oa1skh1e4418jot0vk.apps.googleusercontent.com',
+    iosBundleId: 'com.example.firstApp',
+  );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyDnq0o3cP0AOl4OYhX-S-IL_JIZ9Y2GBpE',
+    appId: '1:940230830659:web:f11deeb4d1223a25e6c2f6',
+    messagingSenderId: '940230830659',
+    projectId: 'healing-animal-sounds',
+    authDomain: 'healing-animal-sounds.firebaseapp.com',
+    storageBucket: 'healing-animal-sounds.appspot.com',
+    measurementId: 'G-TV372KF89P',
+  );
+
 }
