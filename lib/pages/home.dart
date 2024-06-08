@@ -232,18 +232,16 @@ class _HomePageState extends State<HomePage> {
               padding: EdgeInsets.all(10.0),
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage(
-                      Theme.of(context).brightness == Brightness.dark
-                          ? 'assets/images/background/dark_grassland.png'
-                          : 'assets/images/background/home-bg.png'),
-                  fit: BoxFit.cover,
-                ),
+                    image: AssetImage(
+                        Theme.of(context).brightness == Brightness.dark
+                            ? 'assets/images/background/dark_grassland.png'
+                            : 'assets/images/background/home-bg.png'),
+                    fit: BoxFit.cover),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                                    UserNameBox(),
-
+                  UserNameBox(),
                   SizedBox(height: 10.0),
                   SizedBox(
                     width: double.infinity,
