@@ -6,7 +6,6 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:healing_animal_sounds/pages/setting.dart';
 import 'package:healing_animal_sounds/pages/sound.dart';
 import 'package:healing_animal_sounds/utils/ad_helper.dart';
-import 'package:healing_animal_sounds/utils/user_provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -241,7 +240,6 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  UserNameBox(),
                   SizedBox(height: 10.0),
                   SizedBox(
                     width: double.infinity,
@@ -402,18 +400,3 @@ class VipDialog extends StatelessWidget {
   }
 }
 
-class UserNameBox extends ConsumerWidget {
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final userData = ref.read(userDataProvider);
-    return Container(
-        width: 150,
-        height: 150,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(100),
-          color: Colors.white,
-        ),
-        child: Text(userData.username ?? '未登入',
-            style: TextStyle(color: Colors.black)));
-  }
-}

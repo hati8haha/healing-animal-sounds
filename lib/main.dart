@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:healing_animal_sounds/pages/auth_gate.dart';
 import 'package:healing_animal_sounds/pages/setting.dart';
 import 'package:healing_animal_sounds/pages/sound.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -8,11 +7,11 @@ import 'package:json_theme/json_theme.dart';
 import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'utils/theme_provider.dart';
 import 'constants/theme.dart';
 import './pages/home.dart';
 import './pages/landing.dart';
+import './pages/auth.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -51,7 +50,7 @@ class MyApp extends ConsumerWidget {
       initialRoute: '/landing',
       routes: {
         '/landing': (context) => LandingPage(),
-        // '/auth': (context) => AuthGate(),
+        '/auth': (context) => AuthPage(),
         '/home': (context) => HomePage(),
         '/sound': (context) => SoundPage(
               animalName: 'Crow_Animations',
